@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css' ) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shorcut icon" href="/static/img/logorc.png">
+</head>
+
+<body style="background-color: #fff;">
+    <div class="reset_cont" style="width: 100%;">
+        <div class="reset_pass">
+           <img src='https://i.postimg.cc/3rg3Xr6L/img-email.jpg' width="100%" alt="">
+            <div class="reset_title"
+                style="text-align: center; color: #fff; background-color: #010c1f; padding: 35px;  margin-bottom: 25px;">
+                <span style="font-size: 35px; font-weight: 900; font-family: Arial;">Recuperación de
+                    contraseña</span>
+            </div>
+            <div class="reset_info" style="padding: 0 25px;">
+                <h1 style="color: #000; font-size: 18px; font-weight: 200; font-family: Arial; margin-bottom: 15px;">
+                    Hola, te hemos enviado un enlace para la
+                    recuperación de tu contraseña</h1>
+                <h1 style="color: #000; font-size: 18px; font-weight: 200; font-family: Arial; margin-bottom: 30px;">
+                    Para restaurar tu contraseña haz click en
+                    el siguiente enlace</h1>
+                <a href="{{ reset_link }}"
+                    style="background-color: #010c1f; color: #fff; text-decoration: none; padding: 15px; font-weight: 600;">Cambiar
+                    contraseña</a>
+                <h1 style="color: #000000be; font-size: 15px; font-weight: 200; font-family: Arial; margin: 30px 0;">
+                    Si usted no pidio esta solicitud, ignore este mensaje.</h1>
+            </div>
+            <div>
+                   <img src='https://i.postimg.cc/fyRK9GYw/footer-email.jpg' width="100%" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

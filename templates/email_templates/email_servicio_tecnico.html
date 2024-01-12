@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css' ) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shorcut icon" href="/static/img/logorc.png">
+</head>
+
+<body>
+
+    <div class="email_servicies" style="background: url('https://i.postimg.cc/sDMqsyTK/background-email.jpg'); background-position: center; background-size: cover;  padding: 25px;">
+        <ul style=" display: flex; align-items: center; position: absolute; top: 15px; left: 15px; color: #fff;">
+            <img src='https://i.postimg.cc/svGYfS5n/logorc.png' width="40px" alt='background-email'>
+            <h1 style="font-weight: 900; font-size: 18px; font-family: 'Open Sans'; margin: 0 5px;">RedCompu</h1>
+        </ul>
+        <h2
+            style=" color: #fff; padding: 15px; font-family: 'Open Sans'; font-size: 25px; font-weight: 900; text-align: center;">
+            Nuevo formulario - Servicio Tecnico</h2>
+        <div style="width: 50%; margin: 0 auto; color: #fff;">
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Nombre:</strong> {{ nombre }}
+            </p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Teléfono:</strong> {{ telefono
+                }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Correo electrónico:</strong> {{
+                email }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Dispositivo:</strong> {{
+                dispositivo }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Problema:</strong> {{ problema
+                }}</p>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+{%extends 'base.html'%}
+
+{%block title%}Red Compu - Programación{%endblock%}
+
+{%block content%}
+
+<body class="body-programing">
+    <main>
+        <section>
+            <!-- 
+
+            <div class="contenedor-portafolio-web">
+                <div class="portafolio-title">
+                    Paginas Web diseñadas
+                </div>
+                <div class="cont-web">
+                    <div class="cont-web-title">
+                        <div class="web-img">
+                            <img src="/static/img/my portafolio/web 1.jpg" alt="">
+                        </div>
+                        <div class="web-text">
+                            <h1>Pagina web Universidad</h1>
+
+                        </div>
+                    </div>
+                    <div class="cont-web-title">
+                        <div class="web-img">
+                            <img src="/static/img/my portafolio/web 2.jpg" alt="">
+                        </div>
+                        <div class="web-text">
+                            <h1>Pagina web restaurant</h1>
+
+                        </div>
+                    </div>
+                    <div class="cont-web-title">
+                        <div class="web-img">
+                            <img src="/static/img/my portafolio/web 3.jpg" alt="">
+                        </div>
+                        <div class="web-text">
+                            <h1>Pagina web tienda Ecommerce</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            -->
+
+            <div class="contenedor-services-programing">
+                <div class="cont-programing">
+                    <div class="programing-text">
+                        <div class="programing-text-info">
+                            <h1>Formulario de contacto</h1>
+                            <h2>RedCompu</h2>
+                            <h3><i class="fa-solid fa-mobile-screen-button"></i>+58 412-9292382</h3>
+                        </div>
+                    </div>
+                    <div class="programing-form">
+                        <div class="programing-form-title">
+                            <h1>Te ofrecemos servicios de:</h1>
+                            <h2>Diseño Web</h2>
+                        </div>
+                        <form action="envio-pro" method="post">
+                            <div class="programing-formulario">
+                                <ul style="font-weight: 600;">Contactanos</ul>
+                                <ul>
+                                    <label>Nombre completo</label>
+                                    <input type="text" id="name" name="nombre">
+                                </ul>
+                                <ul>
+                                    <label>Correo electronico</label>
+                                    <input type="email" id="email" name="email">
+                                </ul>
+                                <ul>
+                                    <label>Numero de Telefono</label>
+                                    <div class="select-box">
+                                        <div class="selected-option">
+                                            <div>
+                                                <span><iconify-icon icon="flag:ve-4x3"></iconify-icon></span>
+                                                <strong>+58</strong>
+                                            </div>
+                                            <input type="tel" name="tel" placeholder="Numero de telefono"
+                                                oninput="validarTelefono(event)">
+                                        </div>
+                                        <div class="options">
+                                            <input type="text" class="search-box" placeholder="Seleccione su Pais">
+                                            <ol>
+
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </ul>
+                                <ul>
+                                    <label>Dirección</label>
+                                    <input type="text" id="direccion" name="direccion">
+                                </ul>
+                                <div class="btn_2">
+                                    <input type="submit" name="btn_2" id="btn_2">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Phone number-->
+    <script>
+
+        const countries = [
+            { name: "Argentina", code: "AR", phone: 54 },
+            { name: "Brazil", code: "BR", phone: 55 },
+            { name: "Chile", code: "CH", phone: 56 },
+            { name: "Bolivia", code: "BO", phone: 591 },
+            { name: "Ecuador", code: "EC", phone: 593 },
+            { name: "Paraguay", code: "PR", phone: 595 },
+            { name: "Peru", code: "PE", phone: 51 },
+            { name: "Colombia", code: "CO", phone: 57 },
+            { name: "Venezuela", code: "VE", phone: 58 },
+            { name: "Uruguay", code: "UY", phone: 598 },
+            { name: "Mexico", code: "ME", phone: 52 },
+            { name: "Guatemala", code: "GT", phone: 502 },
+        ],
+
+            select_box = document.querySelector('.options'),
+            search_box = document.querySelector('.search-box'),
+            input_box = document.querySelector('input[type="tel"]'),
+            selected_option = document.querySelector('.selected-option div');
+
+        let options = null;
+        for (country of countries) {
+            const option = ` 
+            <li class="option">
+              <div>
+                 <span class="iconify"><iconify-icon icon="flag:${country.code.toLowerCase()}-4x3"></iconify-icon></span>
+                 <span class="country-name">${country.name}</span>
+              </div>
+              <span class="phone-number" readonly>+${country.phone}</span>
+          </li> `;
+
+            select_box.querySelector('ol').insertAdjacentHTML('beforeend', option);
+            options = document.querySelectorAll('.option');
+        }
+
+        function selectOption() {
+            console.log(this)
+            const icon = this.querySelector('.iconify').cloneNode(true),
+                phone_code = this.querySelector('.phone-number').cloneNode(true);
+
+            selected_option.innerHTML = '';
+            selected_option.append(icon, phone_code);
+
+            input_box.value = phone_code.innerText;
+
+            select_box.classList.remove('active');
+            selected_option.classList.remove('active');
+
+            search_box.value = '';
+            select_box.querySelectorAll('hide').forEach(el => el.classList.remove('hide'));
+
+        }
+
+        function searchCountry() {
+            let search_query = search_box.value.toLowerCase();
+            for (option of options) {
+                let is_matched = option.querySelector('.country-name').innerText.toLowerCase().includes(search_query);
+                option.classList.toggle('hide', !is_matched)
+            }
+        }
+
+        selected_option.addEventListener('click', () => {
+            select_box.classList.toggle('active');
+            selected_option.classList.toggle('active');
+
+        })
+
+        options.forEach(option => option.addEventListener('click', selectOption));
+        search_box.addEventListener('input', searchCountry);
+
+    </script>
+
+    <!--Script validar telefono-->
+
+    <script>
+        function validarTelefono(event) {
+            // Obtener el valor actual del campo de entrada
+            let inputValue = event.target.value;
+
+            // Reemplazar cualquier carácter que no sea un número o el signo '+' con una cadena vacía
+            let validValue = inputValue.replace(/[^0-9+]/g, '');
+
+            // Actualizar el valor del campo de entrada con la entrada válida
+            event.target.value = validValue;
+        }
+    </script>
+
+</body>
+
+{%endblock%}

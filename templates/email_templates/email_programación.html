@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css' ) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shorcut icon" href="/static/img/logorc.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Open+Sans:wght@300;400;500;600;700&display=swap">
+</head>
+
+<body>
+
+    <div class="email_servicies"
+        style="background: url('https://i.postimg.cc/sDMqsyTK/background-email.jpg'); background-position: center; background-size: cover; font-family: Arial; padding: 25px;">
+        <ul
+            style="display: flex; align-items: center; position: absolute; top: 15px; left: 15px; color: #fff;">
+          
+                <img src='https://i.postimg.cc/svGYfS5n/logorc.png' width="40px" alt='background-email'>
+                <h1 style="font-weight: 900; font-size: 18px; font-family: Arial; margin: 0 5px;">RedCompu</h1>
+        </ul>
+        <h2
+            style="color: #fff; padding: 15px; font-family: Arial; font-size: 25px; font-weight: 900; text-align: center;">
+            Nuevo formulario - Programación Web</h2>
+        <div style="width: 50%; margin: 0 auto; color: #fff;;">
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Nombre Completo:</strong> {{
+                nombre }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Correo electronico:</strong> {{
+                email }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Telefono:</strong> {{ telefono
+                }}</p>
+            <p style="margin: 15px 0; padding: 5px 0;"><strong style="font-weight: 600;">Dirección:</strong> {{
+                direccion }}</p>
+        </div>
+    </div>
+</body>
+
+</html>

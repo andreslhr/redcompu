@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Link-->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css' ) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shorcut icon" href="../static/img/logorc.png">
+
+    <!--Script-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" charset="UTF-8"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <title>{%block title%}{%endblock%}</title>
+</head>
+
+<body>
+
+    <!-- Perfil usuario -->
+
+    <div class="perfil-container" id="perfil-container">
+        <div class="perfil-info">
+            <span class="btn_xmark" id="btnXmark">X</span>
+            <div class="perfil-title">
+                <div class="perfil-title-logo">
+                    <img src="/static/img/logorc.png" width="35px" alt="">
+                    <h1>RedCompu</h1>
+                </div>
+                <div class="perfil-title-welcome">
+                    {% if nombre_usuario %}
+                    <p>Bienvenido <span>{{ nombre_usuario }}</span></p>
+                    {% else %}
+                    <p>Bienvenido</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="perfil-content">
+                <div class="perfil-content-title">
+                    <p>Editar mis datos:</p>
+                </div>
+                <div class="perfil-content-users">
+                    <div class="perfil-user">
+                        <p>Nombre:</p>
+                        <p>Correo electronico:</p>
+                    </div>
+                    <div class="perfil-user user-second">
+                        {% if nombre_usuario %}
+                        <p>{{ nombre_usuario }}</p>
+                        <p>{{ nombre_correo }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <form action="editar-contrasena" method="POST" class="form-edit-dates">
+                    <div class="dates-input">
+                        <p>Cambiar contraseña</p>
+                        <div class="dates-input-submit">
+                            <!-- Agregar campo de nombre de usuario (puede ser oculto) -->
+                            <input type="text" name="username" style="display: none;" aria-hidden="true"
+                                autocomplete="username">
+
+                            <input type="password" name="password" placeholder="Contraseña"
+                                autocomplete="current-password">
+                            <input type="password" name="conf-password" placeholder="Contraseña Nueva"
+                                autocomplete="new-password">
+                            <input type="password" name="rep-conf-password" placeholder="Repetir Contraseña Nueva"
+                                autocomplete="new-password">
+                        </div>
+                        <input id="btn_saved" type="submit" value="Guardar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Preloader -->
+
+    <div id="preloader" class="preloader" style="display: none;">
+        <div class="preloader-cont">
+            <img src="/static/img/preloader.gif" alt="Loading...">
+            <h1>Cerrando Sesión</h1>
+        </div>
+
+    </div>
+    <!-- Preloader password-->
+    <div id="preloader2" class="preloader" style="display: none;">
+        <div class="preloader-cont">
+            <img src="/static/img/preloader.gif" alt="Loading...">
+            <h1>Cargando</h1>
+        </div>
+    </div>
+
+<!--Alert-->
+{% if flash_message %}
+    <ul class="flashes" id="flash-messages">
+        <li>{{ flash_message }}</li>
+    </ul>
+{% endif %}
+
+
+
+    <header>
+
+        <!--Password send-->
+        <div id="pass-send">
+            <div class="send-cont">
+                <div class="pass-logo">
+                    <img src="/static/img/logorc.png" width="35px" alt="">
+                    <p>RedCompu</p>
+                </div>
+                <div class="pass-xmark">
+                    <i id="pss_xmark" class="fa-solid fa-xmark"></i>
+                </div>
+                <div class="pass-text">
+                    <p>Ingrese su corre electronico</p>
+                </div>
+                <div class="pass-cont">
+                    <form action="{{ url_for('send_link') }}" method="post">
+                        <input type="email" id="pass-email" name="email" placeholder="Correo electronico">
+                        <input type="submit" id="pass-submit" value="Enviar">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Menu vertical-->
+
+        <div class="side-bar">
+            <div class="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="menu">
+                <div class="item"><a href="/"><i class="fa-solid fa-house"></i>Inicio</a></div>
+                <div class="item"><a href="descargas"><i class="fa-solid fa-download"></i>Descargas</a></div>
+                <div class="item">
+                    <a class="sub-btn"><i class="fa-solid fa-list"></i>Categorias<i
+                            class="fa-solid fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="inteligencia_artificial" class="sub-item">Inteligencia Artificial</a>
+                        <a href="web_3.0" class="sub-item">La Web 3.0</a>
+                        <a href="sistemas_operativos" class="sub-item">Sistemas Operativos</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <a class="sub-btn"><i class="fa-solid fa-desktop"></i>Servicios<i
+                            class="fa-solid fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="programación" class="sub-item">Programación</a>
+                        <a href="diseño_grafico" class="sub-item">Diseño grafico</a>
+                        <a href="servicio_tecnico" class="sub-item">Servicio tecnico</a>
+                    </div>
+                </div>
+                <div class="item"><a href="quienes_somos"><i class="fa-regular fa-circle-question"></i>¿Quienes
+                        somos?</a></div>
+            </div>
+            <div class="nav-user" id="nav-user-dropdown">
+                {% if current_user.is_authenticated %}
+                <li class="logout-form">
+                    <form>
+                        <a class="btn_perfil" id="btnPerfil2">Mi Perfil</a>
+                    </form>
+                    <form id="logout-form-btn" action="/logout" method="GET">
+                        <input type="submit" class="btn_logout" value="Cerrar Sesión">
+                    </form>
+                </li>
+                {% else %}
+                <!-- Mostrar enlace de inicio de sesión si el usuario no está autenticado -->
+                <li><a href="login" class="login_register">Inicio de sesión o<span>Registro</span></a></li>
+                {% endif %}
+            </div>
+        </div>
+
+        <!--Navegación-->
+        <div class="nav-container">
+            <div class="nav-title">
+                <div class="nav-logo">
+                    <a href="/"><img src="../static/img/logorc.png" width="50px" alt=""></a>
+                    <h1>RedCompu</h1>
+                </div>
+                <nav>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="descargas">Descargas</a></li>
+                    <li><a href="#">Categorias<i id="arrow-down" class="fa-solid fa-caret-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="inteligencia_artificial">Inteligencia Artificial</a> </li>
+                            <li><a href="web_3.0">La Web 3.0</a> </li>
+                            <li><a href="sistemas_operativos">Sistemas Operativos</a> </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Servicios<i id="arrow-down" class="fa-solid fa-caret-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="programación">Programación</a> </li>
+                            <li><a href="diseño_grafico">Diseño grafico</a> </li>
+                            <li><a href="servicio_tecnico">Servicio tecnico</a> </li>
+                        </ul>
+                    </li>
+                    <li><a href="quienes_somos">¿Quienes somos?</a></li>
+                </nav>
+                <div class="nav-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <div class="nav-user">
+                {% if current_user.is_authenticated %}
+                <li class="logout-form">
+                    <form>
+                        <a class="btn_perfil" id="btnPerfil">Mi Perfil</a>
+                    </form>
+                    <form id="logout-form-btn-drop" action="/logout" method="GET">
+                        <input type="submit" class="btn_logout" value="Cerrar Sesión">
+                    </form>
+                </li>
+                {% else %}
+                <!-- Mostrar enlace de inicio de sesión si el usuario no está autenticado -->
+                <li><a href="login" class="login_register">Inicio de sesión o<span>Registro</span></a></li>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+
+    <!--Boton go-->
+
+    <div class="container-go">
+        <div class="go-button">
+            <i class="fas fa-chevron-up"></i>
+        </div>
+    </div>
+
+    {%block content%} {%endblock%}
+
+    {%block footer%}
+
+    <!--Footer-->
+
+    <footer>
+        <div class="contenedor-footer">
+            <div class="cont-footer">
+                <div class="footer-concept">
+                    <h1>RedCompu</h1>
+                    <ul>
+                        <p>RedCompu es una empresa emprendedora especializada en ofrecer soluciones integrales en el
+                            ámbito digital. Con un enfoque versátil, la compañía se destaca por sus servicios de diseño
+                            de páginas web, diseño gráfico y servicio técnico tanto para computadoras como para
+                            teléfonos.</p>
+                    </ul>
+                </div>
+                <div class="footer-title-services">
+                    <h1>Servicios</h1>
+                    <ul>
+                        <a href="diseño_grafico">Diseño grafico</a>
+                        <a href="programacion">Programación</a>
+                        <a href="servicio_tecnico">Servicio Tecnico</a>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h1>Contacto</h1>
+                    <ul>
+                        <h2>+58 412 9292382</h2>
+                        <h2>redcompu872@gmail.com</h2>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h1>Redes sociales</h1>
+                    <ul>
+                        <a href="https://api.whatsapp.com/send?phone=584129292382" target="_blank"><i
+                                class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/Andres.LHR" target="_blank"><i
+                                class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/redcompu320/?hl=es-la" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-reserved">
+                <div class="reserved-title">
+                    <h1>Copyright © 2023 RedCompu | All Rights Reserved</h1>
+                </div>
+                <div class="reserved-cockies">
+                    <a href="politicas_privacidad">Privacidad</a>
+                    <a href="quienes_somos">Quienes Somos</a>
+                    <a href="/">RedCompu</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {%endblock%}
+
+
+
+    <!--Java Script-->
+
+
+    <!--Login-->
+
+    <script>
+
+        const logincont = document.querySelector('.cont-login');
+        const loginLink = document.querySelector('.login-link');
+        const registerLink = document.querySelector('.register-link');
+
+        registerLink.addEventListener('click', () => {
+            logincont.classList.add('active');
+        });
+        loginLink.addEventListener('click', () => {
+            logincont.classList.remove('active');
+        });
+
+
+    </script>
+
+    <script>
+
+        //Togle
+
+        $(document).ready(function () {
+
+            $('.sub-btn').click(function () {
+                $(this).next('.sub-menu').slideToggle();
+                $(this).find('.dropdown').toggleClass('rotate');
+            });
+
+            $('.nav-icon').click(function () {
+                $('.side-bar').addClass('active');
+
+            });
+            $('.close-btn').click(function () {
+                $('.side-bar').removeClass('active');
+
+            });
+
+        });
+
+    </script>
+
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            window.onscroll = function () {
+                if (document.documentElement.scrollTop > 200) {
+                    document.querySelector('.container-go')
+                        .classList.add('show');
+                } else {
+                    document.querySelector('.container-go')
+                        .classList.remove('show');
+                }
+            }
+
+            document.querySelector('.container-go')
+                .addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+
+        });
+
+    </script>
+
+    <!--Script de preloader-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Muestra el preloader cuando el formulario se envía
+            const logoutFormBtn = document.getElementById('logout-form-btn');
+            const logoutFormBtnDrop = document.getElementById('logout-form-btn-drop');
+            const preloader = document.getElementById('preloader');
+
+            if (logoutFormBtn) {
+                logoutFormBtn.addEventListener('submit', function () {
+                    if (preloader) {
+                        preloader.style.display = 'block';
+                    }
+                });
+            }
+
+            if (logoutFormBtnDrop) {
+                logoutFormBtnDrop.addEventListener('submit', function () {
+                    if (preloader) {
+                        preloader.style.display = 'block';
+                    }
+                });
+            }
+        });
+
+    </script>
+
+    <!--Script mensajes desaparecen-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtenemos la lista de mensajes flash
+            const flashMessages = document.getElementById('flash-messages');
+
+            // Si hay mensajes, configuramos el temporizador para que desaparezcan después de 3 segundos
+            if (flashMessages) {
+                setTimeout(function () {
+                    flashMessages.style.opacity = '0';
+                    setTimeout(function () {
+                        flashMessages.style.display = 'none';
+                    }, 3000);  // Después de que termine el efecto fade, ocultamos el elemento
+                }, 4000);
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnPerfil = document.getElementById('btnPerfil');
+            const btnPerfil2 = document.getElementById('btnPerfil2');
+            const btnXmark = document.getElementById('btnXmark');
+            const perfilContainer = document.querySelector('.perfil-container');  // Asegúrate de que esta línea esté corregida
+
+            console.log(btnPerfil, btnPerfil2, btnXmark, perfilContainer);
+
+            if (btnPerfil && btnPerfil2 && btnXmark && perfilContainer) {
+                function togglePerfilContainer() {
+                    perfilContainer.style.display = (perfilContainer.style.display === 'none' || perfilContainer.style.display === '') ? 'block' : 'none';
+                }
+
+                btnPerfil.addEventListener('click', togglePerfilContainer);
+                btnPerfil2.addEventListener('click', togglePerfilContainer);
+                btnXmark.addEventListener('click', function () {
+                    perfilContainer.style.display = 'none';
+                });
+            } else {
+                console.error('Alguno de los elementos no se encontró en el DOM.');
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

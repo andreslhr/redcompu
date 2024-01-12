@@ -1,0 +1,162 @@
+{%extends 'base.html'%}
+
+{%block title%}Red Compu - Inicio de Sesión{%endblock%}
+
+{%block content%}
+<main>
+    <section>
+        <div class="contenedor-login">
+            <div class="cont-login">
+                <div class="form-box login">
+                    <h2>Iniciar Sesión</h2>
+                    <form action="login" method="POST">
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" name="email" autocomplete="username" required>
+                            <label>Correo electronico</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" name="password" id="password" required
+                                autocomplete="current-password">
+                            <label>Contraseña</label>
+                            <span><button class="btn_pass" type="button" onclick="mostrarContrasena()"><i
+                                        class="fa-solid fa-eye"></i></button></span>
+
+                        </div>
+                        <div class="remember-forgot">
+                            <label><input type="checkbox" name="remember">Recordarme</label>
+                            <a id="forgot-password-link">¿Olvido su contraseña?</a>
+                        </div>
+                        <Input type="submit" class="btn_login" value="Iniciar Sesión">
+                        <div class="login-register">
+                            <p>¿No tienes cuenta?<a href="#" class="register-link">Registrate</a></p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-box register">
+                    <h2>Registrate</h2>
+                    <h3>Por favor rellena todos los campos</h3>
+                    <form action="registro" id="registration-form" method="post">
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-regular fa-user"></i></span>
+                            <input type="text" name="name" required>
+                            <label>Nombre Completo</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" name="email_register" autocomplete="username" required>
+                            <label>Correo electronico</label>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" name="password_register" id="password-register" maxlength="8"
+                                minlength="4" autocomplete="current-password" required>
+                            <label for="password-register">Contraseña</label>
+                            <span><button class="btn_pass" type="button" onclick="mostrarContrasenaRegister()"><i
+                                        class="fa-solid fa-eye"></i></button></span>
+                        </div>
+                        <div class="input-box">
+                            <span class="icon-login"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" name="cnfrm-password" id="cnfrm-password"
+                                autocomplete="current-password" required>
+                            <label for="cnfrm-password">Confirmar contraseña</label>
+                            <span><button class="btn_pass" type="button" onclick="mostrarContrasenaConfirm()"><i
+                                        class="fa-solid fa-eye"></i></button></span>
+                        </div>
+                        <div class="remember-forgot terminos">
+                            <label><input type="checkbox" required>Acepta los terminas y condiciones?</label>
+                        </div>
+                        <input type="submit" class="btn_login" value="Registrate">
+                        <div class="login-register">
+                            <p>¿Ya tienes una cuenta?<a href="#" class="login-link">Inicia Sesión</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!--Mostrar contraseña-->
+
+<script>
+    function mostrarContrasena() {
+        var tipo = document.getElementById("password");
+        if (tipo.type == "password") {
+            tipo.type = "text";
+        } else {
+            tipo.type = "password";
+        }
+    }
+
+    function mostrarContrasenaRegister() {
+        var tipo = document.getElementById("password-register");
+        if (tipo.type == "password") {
+            tipo.type = "text";
+        } else {
+            tipo.type = "password";
+        }
+    }
+
+    function mostrarContrasenaConfirm() {
+        var tipo = document.getElementById("cnfrm-password");
+        if (tipo.type == "password") {
+            tipo.type = "text";
+        } else {
+            tipo.type = "password";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Código adicional si es necesario
+    });
+
+</script>
+
+<!--Envio de email password-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener referencia al enlace "¿Olvidó su contraseña?"
+        var forgotPasswordLink = document.getElementById('forgot-password-link');
+
+        // Obtener referencia al contenedor "pass-send"
+        var passSendContainer = document.getElementById('pass-send');
+
+        // Obtener referencia al preloader
+        var preloader = document.getElementById('preloader2');
+
+        // Obtener referencia al ícono "xmark"
+        var xmarkIcon = document.getElementById('pss_xmark');
+
+        // Agregar un evento de clic al enlace
+        forgotPasswordLink.addEventListener('click', function (event) {
+            // Evitar el comportamiento predeterminado del enlace
+            event.preventDefault();
+
+            // Mostrar el preloader
+            preloader.style.display = 'block';
+
+            // Esperar 3 segundos y luego mostrar el contenedor "pass-send"
+            setTimeout(function () {
+                // Ocultar el preloader
+                preloader.style.display = 'none';
+
+                // Mostrar el contenedor "pass-send"
+                passSendContainer.style.display = 'block';
+            }, 1500);
+        });
+
+        // Agregar un evento de clic al ícono "xmark"
+        xmarkIcon.addEventListener('click', function () {
+            // Ocultar el contenedor "pass-send" al hacer clic en el ícono "xmark"
+            passSendContainer.style.display = 'none';
+        });
+    });
+</script>
+
+
+{%endblock%}
