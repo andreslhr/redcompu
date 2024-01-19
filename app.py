@@ -361,6 +361,34 @@ def reset_password(token):
     return render_template('reset_password.html', token=token)
 
 
+@app.route('/envio-design', methods=['GET', 'POST'])
+def envio_design():
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        telefono = request.form['telefono']
+
+
+        # Construir el mensaje HTML
+        mensaje_html = render_template('email_templates/email_design.html', nombre=nombre, correo=correo, telefono=telefono)
+
+        # Crear el objeto Message
+        message = Message('Diseño Grafico', sender='example@gmail.com', recipients=['redcompu872@gmail.com'])  # Cambia a tu dirección de correo de destino
+        message.html = mensaje_html
+
+        # Enviar el correo electrónico
+        try:
+             mail.send(message)
+             flash('Correo enviado correctamente, pronto le atenderemos', 'success')
+        except Exception as e:
+             print(f'Error al enviar el correo: {str(e)}')
+             flash('Error al enviar el correo', 'error')
+
+        # Redirigir después de enviar el formulario
+        return redirect(url_for('home'))
+
+    return render_template('home.html')
 
 @app.route('/logout')
 @login_required
